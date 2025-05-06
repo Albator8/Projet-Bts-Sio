@@ -1,0 +1,109 @@
+html {
+    background-color: whitesmoke;
+    background: url(Image/Mr.Keichii.jpg);
+
+   
+}
+
+title{
+    padding-left: 50px;
+    margin-left: 60px;
+}
+
+section1{ 
+    background-color:black;
+    display:inline;
+    padding-left: 50px;
+}
+section2{
+    margin: 160px;
+    background-color: black;
+}
+
+
+head {background-color: bisque;
+    text-align :center  ;
+}
+h1 {
+    text-transform: uppercase;
+    text-align: center;
+    padding-top: 30px;
+    font-size: 2em;
+    font-family: math;
+    color: blue;
+}
+
+p1 {
+    text-transform: uppercase;
+    text-align: center;
+    padding-left: 372px;
+    font-family: "Sacramento", cursive;
+    
+}
+p2 {
+    text-align: center;
+    padding-top: 30px;
+    font-size: 2em;
+}
+p3 {
+    text-align: center;
+    padding-top: 30px;
+    font-size: 2em;
+    
+}
+ h{
+    text-align:center;
+    font-size :large;
+    font-style:normal;
+    
+
+}
+p4 {
+    text-align: center;
+    padding-top: 30px;
+    font-size: 2em;
+    
+}
+p5 {
+    text-transform: uppercase;
+    text-align: center;
+    padding-left: 372px;
+    padding-top: 70px;
+    font-style: oblique;
+}
+p6 {
+    text-transform: uppercase;
+    text-align: center;
+    padding-left: 372px;
+    padding-top: 70px;
+    font-style: oblique;
+}
+p7 {
+    text-transform: uppercase;
+    text-align: center;
+    padding-left: 372px;
+    padding-top:70px;
+    font-style: oblique;
+}
+
+
+
+s
+html { scroll-behavior: smooth;
+
+}
+footer {
+    background-color: red;
+    text-align: center;
+    padding-top: 30px;
+}
+.single-day-regular {
+    font-family: "Single Day", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+
+
+
