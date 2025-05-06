@@ -1,0 +1,12 @@
+import {uState,useEffect} from react 
+inport {View, Text Flatlist} from 'react-native';
+
+export default function App(){
+const[data,setData] = usestate([])
+useEffect (() => {
+	fetch("")
+	then (response => reponse.json())
+	then (json=> {
+		seData(json);
+})
+}

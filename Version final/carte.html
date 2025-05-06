@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Carte interactive des lycées de Guadeloupe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: #007BFF;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    main {
+      display: flex;
+      height: calc(100% - 60px);
+    }
+
+    #sidebar {
+      width: 300px;
+      padding: 1rem;
+      background: #f8f9fa;
+      overflow-y: auto;
+      border-right: 1px solid #dee2e6;
+    }
+
+    #map {
+      flex: 1;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .leaflet-routing-container {
+      background: white;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Carte interactive des lycées de Guadeloupe</h1>
+  </header>
+  <main>
+    <div id="sidebar">
+      <label for="typeSelect">Type de lycée:</label>
+      <select id="typeSelect">
+        <option value="all">Tous</option>
+        <option value="lycee-general">Lycée général</option>
+        <option value="lycee-techno">Lycée technologique</option>
+        <option value="lycee-pro">Lycée professionnel</option>
+      </select>
+
+      <label for="categorySelect">Catégorie:</label>
+      <select id="categorySelect">
+        <option value="all">Toutes</option>
+        <option value="public">Public</option>
+        <option value="prive">Privé</option>
+      </select>
+
+      <label for="searchInput">Recherche par nom:</label>
+      <input type="text" id="searchInput" placeholder="Entrez un nom de lycée">
+
+      <button onclick="geolocate()">Me géolocaliser</button>
+    </div>
+    <div id="map"></div>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
+  <script>
+        var lycees = [
+        {
+                nom: "Lycée professionnel Paul Lacavé",
+                lat: 16.0516845,
+                lon: -61.5609176,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-professionnel-paul-lacave",
+                type:"professionnel",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée général technologique et professionnel Agricole Buffon",
+                lat: 16.2418328,
+                lon: -61.5930893,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-general-technologique-et-professionnel-agricole-alexandre-buffon",
+                type:"polyvalent",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée général et technologique Gerville-Réache",
+                lat: 15.9912449,
+                lon: -61.7257695,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-general-et-technologique-gerville-reache",
+                type:"général et technologique",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée général et technologique Baimbridge",
+                lat: 16.248721485004015,
+                lon: -61.523481441244506,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-general-et-technologique-baimbridge",
+                type: "général et technologique",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée polyvalent Chevalier Saint-Georges",
+                lat: 16.247829173161595,
+                lon: -61.525653538984955,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-polyvalent-chevalier-de-saint-georges",
+                type:"polyvalent",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Hôtelier du Gosier",
+                lat: 16.208491,
+                lon: -61.459699,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-des-metiers-de-l-hotellerie-et-du-tourisme-de-la-guadeloupe",
+                type:"polyvalent",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée général et technologique Jardin d'Essai",
+                lat: 16.249619,
+                lon: -61.525550,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-general-et-technologique-jardin-d-essai",
+                type:"général et technologique",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée général et technologique des Droits De L'Homme",
+                lat: 16.200543142090957,
+                lon: -61.59157343464567,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-general-et-technologique-des-droits-de-l-homme",
+                type:"général et technologique",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Général et Technologique Faustin Fléret",
+                lat: 16.327773,
+                lon: -61.449359,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-general-et-technologique-faustin-fleret",
+                type:"général et technologique",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Général et Technologique Félix Proto",
+                lat: 16.268200,
+                lon: -61.514028,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-general-et-technologique-felix-proto",
+                type: "général et technologique",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Général et Technologique Les Persévérants",
+                lat: 15.992851883988367,
+                lon: -61.724415991399475,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-les-perseverants",
+                type:"général et technologique",
+                categorie:"privé"
+            },
+            {
+                nom: "Lycée Privé Catholique Maîtrise de Massabielle",
+                lat: 16.236079,
+                lon: -61.531473,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-maitrise-de-massabielle",
+                type:"polyvalent",
+                categorie:"privé"
+            },
+            {
+                nom: "Lycée Général et Technologique Sonny RUPAIRE ",
+                lat:  16.330837,
+                lon: -61.706644,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-general-et-technologique-sonny-rupaire",
+                type:"général et technologique",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Général et Technologique Yves Leborgne",
+                lat:  16.24775719696919,
+                lon: -61.36090604534933,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-general-et-technologique-yves-leborgne",
+                type:"général et technologique",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Polyvalent du Nord Grande-Terre",
+                lat: 16.413377298542247,
+                lon: -61.51436366848605,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-polyvalent-nord-grande-terre",
+                type:"polyvalent",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Polyvalent Carnot",
+                lat: 16.238373219481833,
+                lon: -61.537844306997634,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-polyvalent-carnot",
+                type:"polyvalent",
+                categorie:"publique"
+            },  
+            {
+                nom: "Lycée Polyvalent Charles Coeffin",
+                lat: 16.265626115772026,
+                lon: -61.5825495822451,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-polyvalent-charles-coeffin",
+                type:"polyvalent",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Polyvalent de Pointe-Noire",
+                lat: 16.20765706944191,
+                lon: -61.77661087093952,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-polyvalent-de-pointe-noire",
+                type:"polyvalent",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Polyvalent Raoul Georges Nicolo",
+                lat: 16.010051821023072,
+                lon: -61.743414494387395,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-polyvalent-raoul-georges-nicolo",
+                type:"polyvalent",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Professionnel Arron",
+                lat: 16.26461542472486,
+                lon: -61.587546436442715,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-professionnel-augustin-arron",
+                type:"professionnel",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Professionnel Bertène Juminer",
+                lat: 16.274391788025284,
+                lon: -61.6336804827892,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-professionnel-bertene-juminer",
+                type:"professionnel",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Professionnel Blanchet",
+                lat: 15.991543807344373,
+                lon: -61.71575423863456,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-professionnel-prive-de-blanchet",
+                type:"professionnel",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Professionnel Boc Calmet",
+                lat: 16.24434238539253,
+                lon: -61.5323630289913,
+                url: "https://www.onisep.fr/lycee-professionnel-boc-calmet",
+                type:"professionnel",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Professionnel Ducharmoy",
+                lat: 16.018137320749,
+                lon: -61.71559769822191,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-professionnel-ducharmoy",
+                type:"professionnel",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Professionnel Gerty Archimède",
+                lat: 16.34214231417471,
+                lon: -61.45526133876187,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-professionnel-gerty-archimede",
+                type:"professionnel",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Professionnel Louis Delgrès",
+                lat: 16.331998253708637,
+                lon: -61.3526351111442,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-professionnel-louis-delgres",
+                type:"professionnel",
+                categorie:"publique"
+            },
+            {
+                nom: "Lycée Professionnel Saint-Joseph de Cluny",
+                lat: 16.25631328805899,
+                lon: -61.57185698273352,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-professionnel-saint-joseph-de-cluny",
+                type:"professionnel",
+                categorie:"privé"
+            },
+            {
+                nom: "Lycée Professionnel Versailles",
+                lat: 15.995973271356787,
+                lon: -61.723630056827815,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-polyvalent-versailles-saint-joseph-de-cluny",
+                type:"polyvalent",
+                categorie:"privé"
+            },
+            {
+                nom: "Lycée Privé Bel Air",
+                lat: 16.245557227310687,
+                lon: -61.587074335214076,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/lycee-technique-prive-bel-air",
+                type:"professionnel",
+                categorie:"publique"
+            },
+            {
+                nom: "Cité Scolaire d'Excellence Sportive",
+                lat: 16.259049080912774,
+                lon: -61.51947229301345,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/cite-scolaire-d-excellence-sportive",
+                type:"polyvalent",
+                categorie:"publique"
+            },
+            {
+                nom: "Cité scolaire La Persévérance -Lycée",
+                lat: 16.271383883952865,
+                lon: -61.50490592339947,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/cite-scolaire-la-perseverance-lycee",
+                type:"général et technologique",
+                categorie:"privé"
+            },
+            {
+                nom: "Lycée Hyacinthe Bastaraud",
+                lat: 15.884387593833766,
+                lon: -61.31328384214169,
+                url: "https://www.onisep.fr/ressources/structures-enseignement/guadeloupe/guadeloupe/cite-scolaire-la-perseverance-lycee",
+                type:"professionnel",
+                categorie:"publique"
+            }
+        ];
+    let userLocation = null;
+    const map = L.map('map').setView([16.25, -61.53], 10);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const markers = [];
+    let routingControl = null;
+
+    function displayMarkers() {
+      markers.forEach(marker => map.removeLayer(marker));
+      markers.length = 0;
+
+      const selectedType = document.getElementById('typeSelect').value;
+      const selectedCategory = document.getElementById('categorySelect').value;
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+      lycees.forEach(lycee => {
+        if ((selectedType === 'all' || lycee.type === selectedType) &&
+            (selectedCategory === 'all' || lycee.categorie === selectedCategory) &&
+            (lycee.nom.toLowerCase().includes(searchTerm))) {
+          const marker = L.marker([lycee.lat, lycee.lon]).addTo(map)
+            .bindPopup(`<b>${lycee.nom}</b><br><a href="${lycee.url}" target="_blank">Voir les détails</a><br><button onclick="createRoute(${lycee.lat}, ${lycee.lon})">Itinéraire</button>`);
+          markers.push(marker);
+        }
+      });
+    }
+
+    function createRoute(destLat, destLon) {
+      if (!userLocation) {
+        alert("Veuillez d'abord activer la géolocalisation.");
+        return;
+      }
+
+      if (routingControl) {
+        map.removeControl(routingControl);
+      }
+
+      routingControl = L.Routing.control({
+        waypoints: [
+          L.latLng(userLocation.lat, userLocation.lng),
+          L.latLng(destLat, destLon)
+        ],
+        routeWhileDragging: false
+      }).addTo(map);
+    }
+
+    function geolocate() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          L.marker(userLocation).addTo(map)
+            .bindPopup("Vous êtes ici").openPopup();
+          map.setView(userLocation, 12);
+        }, () => {
+          alert("Géolocalisation échouée.");
+        });
+      } else {
+        alert("Votre navigateur ne supporte pas la géolocalisation.");
+      }
+    }
+
+    document.getElementById('typeSelect').addEventListener('change', displayMarkers);
+    document.getElementById('categorySelect').addEventListener('change', displayMarkers);
+    document.getElementById('searchInput').addEventListener('input', displayMarkers);
+
+    displayMarkers(); // Afficher au chargement
+  </script>
+</body>
+</html>

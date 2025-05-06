@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([16.258061395761263, -61.569646824375425], 13);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([16.2488571950185, -61.52501577663281]).addTo(map)
+            .bindPopup('LGT Baimbridge')
+            .openPopup();
+     // Lycée : "Yves-Leborgne Sainte-Anne "//                                  //statut: ""//
+        L.marker([16.247919502865525, -61.36094770195208]).addTo(map)
+            .bindPopup('Yves-Leborgne Sainte-Anne')
+            .openPopup();
+     // Lycée : "Lycée Général et technologique Faustin Feret "//               //statut: "Public"//
+        L.marker([16.328012895292154, -61.44941557733252]).addTo(map)
+            .bindPopup('Lycée Général et technologique Faustin Feret')
+            .openPopup();
+     // Lycée : "Lycée Carnot"//                                                //statut: "Public"//
+        L.marker([16.2385690718342, -61.53789875858468]).addTo(map)
+            .bindPopup('Lycée Carnot')
+            .openPopup();
+     // Lycée : "Lycée de Jardin d essai"//                                     //statut: "Public"//
+        L.marker([16.250057394407513, -61.52551511966146]).addTo(map)
+            .bindPopup('Lycée de Jardin d essai ')
+            .openPopup();
+     // Lycée : "Lycée Général et technologique Faustin Feret"//                //statut: "Public"//
+        L.marker([16.328012895292154, -61.44941557733252]).addTo(map)
+            .bindPopup('Lycée Général et technologique Faustin Feret')
+            .openPopup();
+     // Lycée : "Lycée Général et technologique chevalier Saint George "//      //statut: "Public"//
+        L.marker([16.248070896269137, -61.52578365827981]).addTo(map)
+            .bindPopup('Lycée Général et technologique chevalier Saint George')
+            .openPopup();
+     // Lycée : "Charles Coëffin "//                                            //statut: "Public"//
+        L.marker([16.265804472926757, -61.58196307598897]).addTo(map)
+            .bindPopup('Charles Coëffin')
+            .openPopup();
+     // Lycée : "Cité scolaire d’excellence sportive"//                         //statut: "Public"//
+        L.marker([16.24300000, -61.53200000]).addTo(map)
+            .bindPopup('Cité scolaire d’excellence sportive')
+            .openPopup();
+     // Lycée : "Lycée Agricole Buffon "//                                      //statut: "Public"//
+        L.marker([16.27300000, -61.58900000]).addTo(map)
+            .bindPopup('Lycée Agricole Buffon')
+            .openPopup();
+     // Lycée : "Lycée des métiers de l\'hôtellerie et du tourisme de la Guadeloupe "//             //statut: "Public"//
+        L.marker([16.20600000, -61.49200000]).addTo(map)
+            .bindPopup('Lycée des métiers de l\'hôtellerie et du tourisme de la Guadeloupe')
+            .openPopup();
+     // Lycée : "Lycée Général et Technologique La Persévérance "//             //statut: "Public"//
+        L.marker([16.23800000, -61.53600000]).addTo(map)
+            .bindPopup('Lycée Général et Technologique La Persévérance')
+            .openPopup();
+     // Lycée : " Lycée Général et Technologique Droit de l\'homme"//           //statut: "Public"//
+        L.marker([16.28300000, -61.56400000]).addTo(map)
+            .bindPopup('Lycée Général et Technologique Droit de l\'homme')
+            .openPopup();
+     // Lycée : "Lycée Général et Technologique Félix Proto"//                  //statut: "Public"//
+        L.marker([16.25700000, -61.53300000]).addTo(map)
+            .bindPopup('Lycée Général et Technologique Félix Proto')
+            .openPopup();
+     // Lycée : "Lycée Général et Technologique Gerville Réache"//              //statut: "Public"//
+        L.marker([15.99500000, -61.72800000]).addTo(map)
+            .bindPopup('Lycée Général et Technologique Gerville Réache')
+            .openPopup();
+     // Lycée : "Lycée Général et Technologique Massabielle"//                  //statut: "Public"//
+        L.marker([16.23900000, -61.53400000]).addTo(map)
+            .bindPopup('Lycée Général et Technologique Massabielle')
+            .openPopup();
+     // Lycée : "Lycée Général et Technologique Sonny Rupaire')"//              //statut: "Public"//
+        L.marker([16.33300000, -61.70100000]).addTo(map)
+            .bindPopup('Lycée Général et Technologique Sonny Rupaire')
+            .openPopup();
+     // Lycée : "Lycée Général et Technologique Versailles"//                   //statut: "Public"//
+        L.marker([15.99900000, -61.73100000]).addTo(map)
+            .bindPopup('Lycée Général et Technologique Versailles')
+            .openPopup();
+     // Lycée : "Lycée Professionnel Saint-Joseph de Cluny"//                   //statut: "Public"//
+        L.marker([16.27100000, -61.58300000]).addTo(map)
+            .bindPopup('Lycée Professionnel Saint-Joseph de Cluny')
+            .openPopup();
+     // Lycée : "Lycée Professionnel Versailles"//                              //statut: "Public"//
+        L.marker([15.99600000, -61.73200000]).addTo(map)
+            .bindPopup('Lycée Professionnel Versailles')
+            .openPopup();
+     // Lycée : "Lycée technique et professionnel de Bel Air"//                 //statut: "Public"//
+        L.marker([16.27500000, -61.57800000]).addTo(map)
+            .bindPopup('Lycée technique et professionnel de Bel Air')
+            .openPopup();
+     // Lycée : "Lycée Polyvalent du Nord Grande-Terre"//                       //statut: ""//
+        L.marker([16.41700000, -61.52500000]).addTo(map)
+            .bindPopup('Lycée Polyvalent du Nord Grande-Terre')
+            .openPopup();
+     // Lycée : "Lycée Polyvalent de Pointe-Noire"//                           //statut: ""//
+        L.marker([16.23300000, -61.78900000]).addTo(map)
+            .bindPopup('Lycée Polyvalent de Pointe-Noire')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([15.86700000, -61.58000000]).addTo(map)
+            .bindPopup('Lycée Polyvalent Yacinthe Bastaraud')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.27500000, -61.57800000]).addTo(map)
+            .bindPopup('Lycée Professionnel Arron')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.24700000, -61.64700000]).addTo(map)
+            .bindPopup('Lycée Professionnel Bertène Juminer')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([15.99300000, -61.73300000]).addTo(map)
+            .bindPopup('Lycée Professionnel Blanchet')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.24000000, -61.53400000]).addTo(map)
+            .bindPopup('Lycée Professionnel Boc Calmet')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.02800000, -61.71700000]).addTo(map)
+            .bindPopup('Lycée Professionnel Ducharmoy')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.32700000, -61.49500000]).addTo(map)
+            .bindPopup('Lycée Professionnel Gerty Archimède')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.32800000, -61.50200000]).addTo(map)
+            .bindPopup('Lycée Professionnel Louis Delgrès')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([15.98400000, -61.72600000]).addTo(map)
+            .bindPopup('Lycée Professionnel Paul LACAVE')
+            .openPopup();
+            // !!!!!!! Les lycéé apres 'Lycée Professionnel Paul LACAVE' n ont pas les bonne coordonée, elle sont manquante dans la bdd//
+
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.41700000, -61.52500000]).addTo(map)
+            .bindPopup('Lycée Professionnel de la Guadeloupe')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.41700000, -61.52500000]).addTo(map)
+            .bindPopup('Lycée Professionnel du Lamentin')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.41700000, -61.52500000]).addTo(map)
+            .bindPopup('Lycée Technique et Professionnel des Iles de la Désirade')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.41700000, -61.52500000]).addTo(map)
+            .bindPopup('Lycée Professionnel Montplaisir')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.41700000, -61.52500000]).addTo(map)
+            .bindPopup('Lycée Professionnel Sainte-Thérèse')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.41700000, -61.52500000]).addTo(map)
+            .bindPopup('Lycée Privé Polyvalent Notre-Dame du Rosaire')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.41700000, -61.52500000]).addTo(map)
+            .bindPopup('Lycée Privé Saint-Jean-Baptiste de La Salle')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.41700000, -61.52500000]).addTo(map)
+            .bindPopup('Lycée Privé La Salle - Les Abymes')
+            .openPopup();
+     // Lycée : " "//                                                           //statut: ""//
+        L.marker([16.41700000, -61.52500000]).addTo(map)
+            .bindPopup('Lycée Privé Notre-Dame de l’Assomption')
+            .openPopup();
+    </script>
+</body>
+</html>
+-
